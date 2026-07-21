@@ -48,4 +48,20 @@ public class UpdatePostTest extends BaseTest {
                 .body("title", equalTo("Patched Title Only"))
                 .body("id", equalTo(1));
     }
+
+    @Test(description = "PUT /posts/{id} ignores a mismatched id in the body and trusts the URL path instead")
+    public void updatePost_put_bodyIdMismatch_urlIdWins() {
+        Post updatedPost = new Post(1, "Mismatched Id Test", "Body id should be ignored.");
+        updatedPost.setId(999); // deliberately different from the URL's id
+
+        given()
+                .spec(requestSpec)
+                .body(updatedPost)
+                .when()
+                .put("/posts/1")
+                .then()
+                .statusCode(200)
+                .body("id", equalTo(1)) // URL's id wins, not the body's 999
+                .body("title", equalTo("Mismatched Id Test"));
+    }
 }
