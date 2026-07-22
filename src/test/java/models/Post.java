@@ -2,10 +2,15 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Maps to a single post object from json-server's /posts resource.
+ * id is a String, not an int - json-server v1 generates all ids
+ * (including auto-generated ones on POST) as strings.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Post {
 
-    private int id;
+    private String id;
     private int userId;
     private String title;
     private String body;
@@ -19,11 +24,11 @@ public class Post {
         this.body = body;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

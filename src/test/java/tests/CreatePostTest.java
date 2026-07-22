@@ -12,7 +12,7 @@ import static org.testng.Assert.assertTrue;
 
 public class CreatePostTest extends BaseTest {
 
-    @Test(description = "POST /posts creates a post and echoes back the submitted fields with a new id")
+    @Test(description = "POST /posts creates a post and echoes back the submitted fields with a server-assigned id")
     public void createPost_success() {
         Post newPost = new Post(1, "My Test Post", "This is the body of my test post.");
 
@@ -32,6 +32,6 @@ public class CreatePostTest extends BaseTest {
         assertEquals(created.getTitle(), newPost.getTitle());
         assertEquals(created.getBody(), newPost.getBody());
         assertEquals(created.getUserId(), newPost.getUserId());
-        assertTrue(created.getId() > 0, "Created post should be assigned a new id");
+        assertTrue(created.getId() != null && !created.getId().isEmpty(), "Created post should be assigned a non-empty id");
     }
 }
