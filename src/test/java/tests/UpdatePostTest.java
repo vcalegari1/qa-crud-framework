@@ -15,13 +15,12 @@ public class UpdatePostTest extends BaseTest {
     @Test(description = "PUT /posts/{id} fully replaces a post and returns the new values")
     public void updatePost_put() {
         Post updatedPost = new Post(1, "Updated Title", "Updated body content.");
-        updatedPost.setId("1");
 
         Response response = given()
                 .spec(requestSpec)
                 .body(updatedPost)
                 .when()
-                .put("/posts/2")
+                .put("/posts/1")
                 .then()
                 .statusCode(200)
                 .body("id", notNullValue())
@@ -31,7 +30,7 @@ public class UpdatePostTest extends BaseTest {
 
         assertEquals(result.getTitle(), "Updated Title");
         assertEquals(result.getBody(), "Updated body content.");
-        assertEquals(result.getId(), "2");
+        assertEquals(result.getId(), "1");
     }
 
     @Test(description = "PATCH /posts/{id} partially updates only the title")
@@ -42,7 +41,7 @@ public class UpdatePostTest extends BaseTest {
                 .spec(requestSpec)
                 .body(partialUpdate)
                 .when()
-                .patch("/posts/2")
+                .patch("/posts/3")
                 .then()
                 .statusCode(200)
                 .body("title", equalTo("Patched Title Only"));
